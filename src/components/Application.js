@@ -8,6 +8,7 @@ import useApplicationData from "../hooks/useApplicationData";
 // import { action } from "@storybook/addon-actions/dist/preview";
 
 export default function Application(props) {
+  console.log("props from application: ", props)
   const {
     state,
     setDay,
@@ -15,9 +16,9 @@ export default function Application(props) {
     cancelInterview
   } = useApplicationData();
   
-  const dailyInterviewers = getInterviewersForDay(state, state.day);
 
   const parsedAppointment = getAppointmentsForDay(state, state.day).map(appointment => {
+    const dailyInterviewers = getInterviewersForDay(state, state.day);
     return <Appointment key={appointment.id}
                         {...appointment}
                         

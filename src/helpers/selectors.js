@@ -20,9 +20,8 @@ export function getInterview(state, interview) {
     const interviewerNum = interview.interviewer;  //10 
     result.interviewer = state.interviewers[interviewerNum]; 
     return result; 
-  } else {
-    return interview;
   } 
+    // return null;
 }; 
 
 export  function getInterviewersForDay(state, day) {

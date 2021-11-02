@@ -25,7 +25,7 @@ export default function useApplicationData () {
 
 
   const bookInterview = (id, interview) => { 
-    // console.log("application----> bookInterview: ", id, interview); 
+    console.log("application----> bookInterview: ", id, interview ); 
     const appointment = {
       ...state.appointments[id],
       interview: {...interview}
@@ -34,12 +34,12 @@ export default function useApplicationData () {
       ...state.appointments,
       [id]: appointment
     }
-    setState({...state, appointments});
     // console.log(setState);
-
-   return axios.put(`http://localhost:8001/api/appointments/${id}`, 
-        interview)
-
+    
+    return axios.put(`http://localhost:8001/api/appointments/${id}`,  {interview})
+    .then(res => {
+      setState({...state, appointments})
+    });
   }
 
   const cancelInterview = (id) => {
@@ -61,11 +61,7 @@ export default function useApplicationData () {
       id
     })
   }
+
   return { state, setDay, bookInterview, cancelInterview };
 } 
 
-
-// The state object will maintain the same structure.
-// The setDay action can be used to set the current day.
-// The bookInterview action makes an HTTP request and updates the local state.
-// The cancelInterview action makes an HTTP request and updates the local state.

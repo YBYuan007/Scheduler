@@ -52,7 +52,7 @@ export default function Form (props) {
           {/* {console.log("let me check mode1", mode)} */}
           <Button danger onClick={(cancel)} >Cancel</Button>
           <Button confirm onClick = {() => {
-                                    // console.log("student name: ", student, "interviewer number is: ", interviewer); // "abc" 8
+                                    console.log("student name: ", student, "interviewer number is: ", interviewer); 
                                     props.onSave(student, interviewer); 
                                     // const interview = {student, interviewer: {id: interviewer, name: , avatar: }}
                                     // props.bookInterview ( appointment id and interview as arguments from within the save function. )
