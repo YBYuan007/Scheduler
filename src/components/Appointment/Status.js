@@ -15,6 +15,3 @@ export default function Status (props) {
 }
 
 
-
-
-// message:String eg. "Deleting"
