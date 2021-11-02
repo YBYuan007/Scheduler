@@ -11,6 +11,7 @@ export default function DayListItem (props) {
     ); 
 
   // const itemClass = `list__item  ${props.selcted ? "list__item--selected" : ""}`;
+  // console.log("props.spots????", props.spot);
 
   return (
     <li className = {DayListClass} onClick= {() => props.onChange(props.name)}> 
