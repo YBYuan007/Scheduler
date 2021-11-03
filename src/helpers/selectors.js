@@ -9,8 +9,8 @@ export function getAppointmentsForDay(state, day) {
           result.push(state.appointments[vv]);
         } 
       }
-    }
-    return result;
+    } 
+    return result ; 
 };
 
 export function getInterview(state, interview) {
@@ -21,7 +21,7 @@ export function getInterview(state, interview) {
     result.interviewer = state.interviewers[interviewerNum]; 
     return result; 
   } 
-    // return null;
+    return null;
 }; 
 
 export  function getInterviewersForDay(state, day) {

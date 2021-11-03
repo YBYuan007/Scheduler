@@ -7,7 +7,7 @@ import Form from './Form';
 import Status from './Status';
 import Confirm from "./Confirm";
 import Error from "./Error";
-import useVisualMode from 'hooks/useVisualMode';
+import {useVisualMode} from 'hooks/useVisualMode';
 
 export default function Appointment (props) {
   console.log("props in index: ", props)
