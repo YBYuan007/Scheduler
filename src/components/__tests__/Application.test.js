@@ -9,4 +9,3 @@ afterEach(cleanup);
 it.only("renders without crashing", () => {
   render(<Application />);
 });
-
