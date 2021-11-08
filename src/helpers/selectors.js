@@ -18,7 +18,7 @@ export function getInterview(state, interview) {
   let result = {};
   if (interview) {
     result.student = interview.student;
-    const interviewerNum = interview.interviewer; //10
+    const interviewerNum = interview.interviewer; 
     result.interviewer = state.interviewers[interviewerNum];
     return result;
   }

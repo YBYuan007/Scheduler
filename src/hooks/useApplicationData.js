@@ -50,7 +50,6 @@ export default function useApplicationData() {
   };
 
   const bookInterview = (id, interview) => {
-    console.log("application----> bookInterview: ", id, interview);
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview },

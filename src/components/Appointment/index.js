@@ -24,12 +24,13 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY // if there is an interview, the mode is SHOW, else EMPTY
   );
 
+  // save an appointment
+
   const save = (name, interviewer) => {
     const interview = {
       student: name,
       interviewer,
     };
-    console.log("this is the save function: ", interview, props.id);
 
     transition(SAVE);
 
@@ -64,7 +65,6 @@ export default function Appointment(props) {
       {mode === SHOW && (
         <Show
           student={props.interview.student}
-          // appointmentId = {props.id}
           interviewer={props.interview.interviewer.name}
           onDelete={() => transition(CONFIRM)}
           onEdit={() => transition(EDIT)}
@@ -74,9 +74,7 @@ export default function Appointment(props) {
         <Form
           interviewers={props.interviewers}
           onSave={save}
-          onCancel={() => {
-            back();
-          }}
+          onCancel={back}
         />
       )}
       {mode === SAVE && <Status message={"saving"} />}
@@ -100,7 +98,7 @@ export default function Appointment(props) {
         />
       )}
       {mode === ERROR_SAVE && <Error onClose={back} />}
-      {mode === ERROR_DELETE && <Error onClose={back} />}
+      {mode === ERROR_DELETE && <Error onClose={() => transition(SHOW)} />}
     </article>
   );
 }
