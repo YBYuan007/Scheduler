@@ -80,10 +80,13 @@ export default function useApplicationData() {
     };
 
     const newSate = { ...state, appointments };
-    setState(newSate);
-    updateSpots(newSate);
-
-    return axios.delete(`http://localhost:8001/api/appointments/${id}`, { id });
+    
+    return axios.delete(`http://localhost:8001/api/appointments/${id}`, { id })
+    .then(() => {
+      setState(newSate);
+      updateSpots(newSate);
+    })
+    
   };
 
   return { state, setDay, bookInterview, cancelInterview };
