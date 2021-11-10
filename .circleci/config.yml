@@ -29,7 +29,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "9d:85:93:58:9d:c4:74:ee:62:a1:6d:71:6c:7d:59:7d"
+            - "25:51:fb:e4:51:7c:61:ea:af:6b:a9:e8:15:95:fe:1e"
       - checkout
       - run:
           name: Push Master to Production
@@ -38,6 +38,15 @@ jobs:
 
 workflows:
   version: 2
-  test:
+  test_and_deploy:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              ignore: production
+      - deploy:
+          filters:
+            branches:
+              ignore: production
+          requires:
+            - build
