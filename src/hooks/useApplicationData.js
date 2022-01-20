@@ -13,6 +13,7 @@ export default function useApplicationData() {
   const setDay = (day) => setState({ ...state, day });
 
   useEffect(() => {
+    console.log("useApplicationData")
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),
