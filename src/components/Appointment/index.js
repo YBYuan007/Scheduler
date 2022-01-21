@@ -10,7 +10,6 @@ import Error from "./Error";
 import { useVisualMode } from "hooks/useVisualMode";
 
 export default function Appointment(props) {
-  console.log("props in index: ", props);
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
