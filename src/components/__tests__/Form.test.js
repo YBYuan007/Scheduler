@@ -31,7 +31,7 @@ describe("Form", () => {
   });
 
   it("validates that the student name is not blank", () => {
-    const onSave = jest.fn();
+    const onSave = jest.fn(); // mock individual functions
     const { getByText } = render(
       <Form interviewers={interviewers} onSave={onSave} />
     );
