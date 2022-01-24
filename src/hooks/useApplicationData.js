@@ -15,7 +15,7 @@ export default function useApplicationData() {
     days: [],
     appointments: {},
     interviewers: {},
-    // press the correct interview to update , id && interview , similar to bookInterview , within the appointments 
+    // press the correct interview to update , id && interview , similar to bookInterview , within the appointments
   };
 
   const SET_DAY = "SET_DAY";
@@ -23,49 +23,56 @@ export default function useApplicationData() {
   const SET_INTERVIEW = "SET_INTERVIEW";
   const SET_SPOT = "SET_SPOT";
 
-  function reducer(prevState, action) {  // only care about the return new state 
+  function reducer(prevState, action) {
+    // only care about the return new state
     switch (action.type) {
       case SET_DAY:
-        return {...prevState, day: action.day}; // ...prevState copied the original state, action.day is the parameter I need to pass in? 
-      case SET_APPLICATION_DATA: // update / fetch days, appointments, and interviewers 
-        return { ...prevState, 
-                days: action.days,
-                 appointments: action.appointments,
-                  interviewers: action.interviewers};
-      
-      case SET_INTERVIEW: // the selected interview??  this one is within the initialappointments. 
-        
+        return { ...prevState, day: action.day }; // ...prevState copied the original state, action.day is the parameter I need to pass in?
+      case SET_APPLICATION_DATA: // update / fetch days, appointments, and interviewers
+        return {
+          ...prevState,
+          days: action.days,
+          appointments: action.appointments,
+          interviewers: action.interviewers,
+        };
+
+      case SET_INTERVIEW: // the selected interview??  this one is within the initialappointments.
         const appointment = {
-            ...prevState.appointments[action.id],
-            interview: { ...action.interview },
-          };
-      
-          const appointments = {
-            ...prevState.appointments,
-            [action.id]: appointment,
-          };  
+          ...prevState.appointments[action.id],
+          interview: { ...action.interview },
+        };
 
-        return {...prevState, appointments: appointments};
+        const appointments = {
+          ...prevState.appointments,
+          [action.id]: appointment,
+        };
+        console.log("here is set_interview ");
+        return { ...prevState, appointments: appointments };
 
-        case SET_SPOT: 
-
-          const todayAppointments = getAppointmentsForDay(action.state, action.state.day);
-          let count = 0;
-          for (let i of todayAppointments) {
-            if (i.interview === null) {
-              count++;
-            }
+      case SET_SPOT:
+        console.log("what is prevState", prevState);
+        const todayAppointments = getAppointmentsForDay(
+          prevState,
+          prevState.day
+        );
+        let count = 0;
+        for (let i of todayAppointments) {
+          if (i.interview === null || Object.keys(i.interview).length === 0) {
+            count++;
           }
-      
-          const daySpots = prevState.days.map(eachDay => {
-            if (eachDay.name === action.state.day) {
-              return {...eachDay, spots: count}
-            } else {
-              return eachDay
-            }
-          })
-      
-         return  {...prevState, days: daySpots}
+        }
+        console.log("what is count", count);
+
+        const daySpots = prevState.days.map((eachDay) => {
+          if (eachDay.name === prevState.day) {
+            return { ...eachDay, spots: count };
+          } else {
+            return eachDay;
+          }
+        });
+
+        console.log("what is dayspots", daySpots);
+        return { ...prevState, days: daySpots };
 
       default:
         throw new Error(
@@ -76,45 +83,42 @@ export default function useApplicationData() {
 
   const [state, dispatch] = useReducer(reducer, initialState);
   // const setDay = (day) => setState({ ...state, day });
-  const setDay = (day) => dispatch({type: SET_DAY, day: day});
+  const setDay = (day) => dispatch({ type: SET_DAY, day: day });
 
+  // const updateSpots = (state) => {
+  // const todayAppointments = getAppointmentsForDay(state, state.day);
+  // let count = 0;
+  // for (let i of todayAppointments) {
+  //   if (i.interview === null) {
+  //     count++;
+  //   }
+  // }
 
-  const updateSpots = (state) => {
-    // const todayAppointments = getAppointmentsForDay(state, state.day);
-    // let count = 0;
-    // for (let i of todayAppointments) {
-    //   if (i.interview === null) {
-    //     count++;
-    //   }
-    // }
+  // const daySpots = state.days.map(eachDay => {
+  //   if (eachDay.name === state.day) {
+  //     return {...eachDay, spots: count}
+  //   } else {
+  //     return eachDay
+  //   }
+  // })
 
-    // const daySpots = state.days.map(eachDay => {
-    //   if (eachDay.name === state.day) {
-    //     return {...eachDay, spots: count}
-    //   } else {
-    //     return eachDay
-    //   }
-    // })
+  // const newDay = {...state, days: daySpots}
 
-    // const newDay = {...state, days: daySpots}
+  // dispatch({type: SET_SPOT, state: state});
 
-    dispatch({type: SET_SPOT, state: state});
-
-
-
-    // setState((prev) => {
-      // const daysB = [...prev.days];
-      // const newDays = daysB.map((eachDay) => {
-      //   if (eachDay.name === prev.day) { 
-      //           if eachDay.name ("Monday, Tuesday ... ") equals to selected date, then update the spot number
-      //     return { ...eachDay, spots: count };
-      //   } else {
-      //     return eachDay;
-      //   }
-      // });
-    //   return { ...prev, days: newDays };
-    // });
-  };
+  // setState((prev) => {
+  // const daysB = [...prev.days];
+  // const newDays = daysB.map((eachDay) => {
+  //   if (eachDay.name === prev.day) {
+  //           if eachDay.name ("Monday, Tuesday ... ") equals to selected date, then update the spot number
+  //     return { ...eachDay, spots: count };
+  //   } else {
+  //     return eachDay;
+  //   }
+  // });
+  //   return { ...prev, days: newDays };
+  // });
+  // };
 
   useEffect(() => {
     Promise.all([
@@ -129,14 +133,14 @@ export default function useApplicationData() {
       //   appointments: res[1].data,
       //   interviewers: res[2].data,
       // }));
-      dispatch({type: SET_APPLICATION_DATA,
-                days: res[0].data, 
-                appointments: res[1].data, 
-                interviewers: res[2].data, })
+      dispatch({
+        type: SET_APPLICATION_DATA,
+        days: res[0].data,
+        appointments: res[1].data,
+        interviewers: res[2].data,
+      });
     });
   }, []);
-
-
 
   const bookInterview = (id, interview) => {
     // const appointment = {
@@ -149,16 +153,16 @@ export default function useApplicationData() {
     //   [id]: appointment,
     // };
 
-    return axios.put(`/api/appointments/${id}`, { interview }).then((res) => {
-      dispatch({type: SET_INTERVIEW, id: id, interview: interview }); 
+    return axios.put(`/api/appointments/${id}`, { interview }).then(() => {
+      dispatch({ type: SET_INTERVIEW, id: id, interview: interview });
       // const newSate = { ...state, appointments };
       // setState(newSate);
       // updateSpots(newSate);
-      dispatch({type: SET_SPOT, state:state})
+      console.log(" bookinterview before setSpot dispatch");
+      dispatch({ type: SET_SPOT, state: state });
+      console.log(" bookinterview after setSpot dispatch");
     });
   };
-
-
 
   const cancelInterview = (id) => {
     // const appointment = {
@@ -172,13 +176,14 @@ export default function useApplicationData() {
     // };
 
     // const newSate = { ...state, appointments };
-    
 
     return axios.delete(`/api/appointments/${id}`, { id }).then(() => {
-      dispatch({type: SET_INTERVIEW, id: id, interview: null }); 
+      dispatch({ type: SET_INTERVIEW, id: id, interview: null });
       // setState(newSate);
       // updateSpots(newSate);
-      dispatch({type: SET_SPOT, state:state})
+      console.log(" cancelInterview before setSpot dispatch");
+      dispatch({ type: SET_SPOT, state: state });
+      console.log(" cancelInterview after setSpot dispatch");
     });
   };
 
