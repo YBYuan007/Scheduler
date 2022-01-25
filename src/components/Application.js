@@ -10,7 +10,7 @@ import "components/Application.scss";
 import Appointment from "components/Appointment/index";
 import useApplicationData from "../hooks/useApplicationData";
 
-export default function Application(props) {
+export default function Application() {
   const { state, setDay, bookInterview, cancelInterview } =
     useApplicationData();
 

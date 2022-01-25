@@ -15,6 +15,7 @@ const fixtures = {
       spots: 1,
     },
   ],
+
   appointments: {
     1: { id: 1, time: "12pm", interview: null },
     2: {
@@ -29,6 +30,7 @@ const fixtures = {
     },
     4: { id: 4, time: "3pm", interview: null },
   },
+  
   interviewers: {
     1: {
       id: 1,
